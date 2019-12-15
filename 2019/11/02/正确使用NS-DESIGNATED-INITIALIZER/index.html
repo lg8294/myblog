@@ -1,0 +1,496 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>正确使用NS_DESIGNATED_INITIALIZER | 李刚的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="李刚">
+    
+
+    
+    <meta name="description" content="正确使用NS_DESIGNATED_INITIALIZER为什么要用NS_DESIGNATED_INITIALIZERObjective-C 中主要通过NS_DESIGNATED_INITIALIZER宏来实现指定构造器的。这里之所以要用这个宏，往往是想告诉调用者要用这个方法去初始化（构造）类对象。 如果子类指定了新的初始化器，那么在这个初始化器内部必须调用父类的Designated Initia">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正确使用NS_DESIGNATED_INITIALIZER">
+<meta property="og:url" content="http://lg8294.cn/myblog/2019/11/02/正确使用NS-DESIGNATED-INITIALIZER/index.html">
+<meta property="og:site_name" content="李刚的博客">
+<meta property="og:description" content="正确使用NS_DESIGNATED_INITIALIZER为什么要用NS_DESIGNATED_INITIALIZERObjective-C 中主要通过NS_DESIGNATED_INITIALIZER宏来实现指定构造器的。这里之所以要用这个宏，往往是想告诉调用者要用这个方法去初始化（构造）类对象。 如果子类指定了新的初始化器，那么在这个初始化器内部必须调用父类的Designated Initia">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-12-15T07:19:14.249Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正确使用NS_DESIGNATED_INITIALIZER">
+<meta name="twitter:description" content="正确使用NS_DESIGNATED_INITIALIZER为什么要用NS_DESIGNATED_INITIALIZERObjective-C 中主要通过NS_DESIGNATED_INITIALIZER宏来实现指定构造器的。这里之所以要用这个宏，往往是想告诉调用者要用这个方法去初始化（构造）类对象。 如果子类指定了新的初始化器，那么在这个初始化器内部必须调用父类的Designated Initia">
+
+    
+    <link rel="alternative" href="atom.xml" title="李刚的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/myblog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/myblog/img/jacman.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/myblog/img/jacman.jpeg">
+    
+    <link rel="stylesheet" href="/myblog/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/myblog/"><img src="/myblog/img/logo.jpeg" alt="李刚的博客" title="李刚的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/myblog/" title="李刚的博客">李刚的博客</a></h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/myblog/">首页</a></li>
+					
+						<li><a href="/myblog/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lg8294.cn/myblog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/myblog/2019/11/02/正确使用NS-DESIGNATED-INITIALIZER/" title="正确使用NS_DESIGNATED_INITIALIZER" itemprop="url">正确使用NS_DESIGNATED_INITIALIZER</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/myblog/about" title="李刚" target="_blank" itemprop="author">李刚</a>
+		
+  <p class="article-time">
+    <time datetime="2019-11-02T15:29:46.000Z" itemprop="datePublished"> 发表于 2019-11-02</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<h1 id="正确使用NS-DESIGNATED-INITIALIZER"><a href="#正确使用NS-DESIGNATED-INITIALIZER" class="headerlink" title="正确使用NS_DESIGNATED_INITIALIZER"></a>正确使用NS_DESIGNATED_INITIALIZER</h1><h3 id="为什么要用NS-DESIGNATED-INITIALIZER"><a href="#为什么要用NS-DESIGNATED-INITIALIZER" class="headerlink" title="为什么要用NS_DESIGNATED_INITIALIZER"></a>为什么要用<code>NS_DESIGNATED_INITIALIZER</code></h3><p>Objective-C 中主要通过<code>NS_DESIGNATED_INITIALIZER</code>宏来实现指定构造器的。这里之所以要用这个宏，往往是想告诉调用者要用这个方法去初始化（构造）类对象。</p>
+<p>如果子类指定了新的初始化器，那么在这个初始化器内部必须调用父类的Designated Initializer。并且需要重写父类的Designated Initializer，将其指向子类新的初始化器，否则会出现警告<code>Method override for the designated initializer of the superclass *** not found</code>，具体取决于你的继承的父类类型：</p>
+<ul>
+<li><p>UIViewController</p>
+<p>Method override for the designated initializer of the superclass ‘- initWithNibName:bundle:’ not found<br>Method override for the designated initializer of the superclass ‘-initWithCoder:’ not found</p>
+</li>
+<li><p>UIView</p>
+<p>Method override for the designated initializer of the superclass ‘-initWithFrame:’ not found<br>Method override for the designated initializer of the superclass ‘-initWithCoder:’ not found</p>
+</li>
+<li><p>NSObject</p>
+<p>Method override for the designated initializer of the superclass ‘-init’ not found</p>
+</li>
+</ul>
+<p>正确写法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// .h</span><br><span class="line">- (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;</span><br><span class="line">  </span><br><span class="line">// .m</span><br><span class="line">- (instancetype)init</span><br><span class="line">&#123;</span><br><span class="line">    return [self initWithName:@&quot;&quot;];</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">- (instancetype)initWithName:(NSString *)name</span><br><span class="line">&#123;</span><br><span class="line">    self = [super init];</span><br><span class="line">    if (self) &#123;</span><br><span class="line">        // do something</span><br><span class="line">    &#125;</span><br><span class="line">    return self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="更好的做法"><a href="#更好的做法" class="headerlink" title="更好的做法"></a>更好的做法</h3><p>如果定义<code>NS_DESIGNATED_INITIALIZER</code>，大多是不想让调用者调用父类的初始化函数，只希望通过该类指定的初始化进行初始化，这时候就可以用<code>NS_UNAVAILABLE</code>宏。</p>
+<p>如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// .h</span><br><span class="line">- (instancetype)init NS_UNAVAILABLE;</span><br><span class="line">- (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;</span><br></pre></td></tr></table></figure>
+<p>如果调用者使用<code>init</code>初始化，编译器就会给出一个编译错误。使用<code>NS_UNAVAILABLE</code>后，就不需要在.m中重写父类初始化函数了。如果要允许调用者使用<code>init</code>就需要在.m中重写父类的初始化函数，如上提到的，否则就会报警告。</p>
+<h3 id="避免使用new"><a href="#避免使用new" class="headerlink" title="避免使用new"></a>避免使用<code>new</code></h3><p>如果使用<code>new</code>来创建对象的话，即使<code>init</code>被声明为<code>NS_UNAVAILABLE</code>，也不会收到编译器的警告和错误提示了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// .h</span><br><span class="line">+ (instancetype)new NS_UNAVAILABLE;</span><br><span class="line">- (instancetype)init NS_UNAVAILABLE;</span><br><span class="line">- (instancetype)initWithName:(NSString *)name NS_DESIGNATED_INITIALIZER;</span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lg8294.cn/myblog/2019/11/02/正确使用NS-DESIGNATED-INITIALIZER/" data-title="正确使用NS_DESIGNATED_INITIALIZER | 李刚的博客" data-tsina="1745988582" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/myblog/2019/10/27/iOS-通知-观察者移除注意点/"  title="iOS 通知 观察者移除注意点">
+ <strong>下一篇：</strong><br/> 
+ <span>iOS 通知 观察者移除注意点
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#正确使用NS-DESIGNATED-INITIALIZER"><span class="toc-number">1.</span> <span class="toc-text">正确使用NS_DESIGNATED_INITIALIZER</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#为什么要用NS-DESIGNATED-INITIALIZER"><span class="toc-number">1.0.1.</span> <span class="toc-text">为什么要用NS_DESIGNATED_INITIALIZER</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更好的做法"><span class="toc-number">1.0.2.</span> <span class="toc-text">更好的做法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#避免使用new"><span class="toc-number">1.0.3.</span> <span class="toc-text">避免使用new</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="lg8294" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/myblog/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/myblog/tags/证书/" title="证书">证书<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://juejin.im/" target="_blank" title="一个面向程序员交流分享的新一代社区">掘金</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/home.html" target="_blank" title="阮一峰">阮一峰</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/myblog/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1745988582&verifier=42136668&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Li Gang in China. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1745988582" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/lg8294" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:lg8294@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/myblog/about" target="_blank" title="李刚">李刚</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/myblog/js/jquery-2.0.3.min.js"></script>
+<script src="/myblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/myblog/js/gallery.js"></script>
+<script src="/myblog/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/myblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/myblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/myblog/img/scrollup.png"/></a>
+	</div>
+	<script src="/myblog/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

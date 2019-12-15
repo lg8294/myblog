@@ -1,0 +1,620 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>常见证书格式及相互转换 | 李刚的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="李刚">
+    
+
+    
+    <meta name="description" content="常见证书格式及相互转换PKCS 全称是 Public-Key Cryptography Standards ，是由 RSA 实验室与其它安全系统开发商为促进公钥密码的发展而制订的一系列标准，PKCS 目前共发布过 15 个标准。  常用的有：PKCS#7 Cryptographic Message Syntax StandardPKCS#10 Certification Request Stand">
+<meta name="keywords" content="证书">
+<meta property="og:type" content="article">
+<meta property="og:title" content="常见证书格式及相互转换">
+<meta property="og:url" content="http://lg8294.cn/myblog/2017/08/16/常见证书格式及相互转换/index.html">
+<meta property="og:site_name" content="李刚的博客">
+<meta property="og:description" content="常见证书格式及相互转换PKCS 全称是 Public-Key Cryptography Standards ，是由 RSA 实验室与其它安全系统开发商为促进公钥密码的发展而制订的一系列标准，PKCS 目前共发布过 15 个标准。  常用的有：PKCS#7 Cryptographic Message Syntax StandardPKCS#10 Certification Request Stand">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-10T14:46:58.364Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="常见证书格式及相互转换">
+<meta name="twitter:description" content="常见证书格式及相互转换PKCS 全称是 Public-Key Cryptography Standards ，是由 RSA 实验室与其它安全系统开发商为促进公钥密码的发展而制订的一系列标准，PKCS 目前共发布过 15 个标准。  常用的有：PKCS#7 Cryptographic Message Syntax StandardPKCS#10 Certification Request Stand">
+
+    
+    <link rel="alternative" href="atom.xml" title="李刚的博客" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/myblog/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/myblog/img/jacman.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/myblog/img/jacman.jpeg">
+    
+    <link rel="stylesheet" href="/myblog/css/style.css">
+</head>
+</html>
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/myblog/"><img src="/myblog/img/logo.jpeg" alt="李刚的博客" title="李刚的博客"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/myblog/" title="李刚的博客">李刚的博客</a></h1>
+				<h2 class="blog-motto">Talk is cheap. Show me the code.</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/myblog/">首页</a></li>
+					
+						<li><a href="/myblog/archives">归档</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:lg8294.cn/myblog">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/myblog/2017/08/16/常见证书格式及相互转换/" title="常见证书格式及相互转换" itemprop="url">常见证书格式及相互转换</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/myblog/about" title="李刚" target="_blank" itemprop="author">李刚</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-16T09:50:27.000Z" itemprop="datePublished"> 发表于 2017-08-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<h1 id="常见证书格式及相互转换"><a href="#常见证书格式及相互转换" class="headerlink" title="常见证书格式及相互转换"></a>常见证书格式及相互转换</h1><p>PKCS 全称是 Public-Key Cryptography Standards ，是由 RSA 实验室与其它安全系统开发商为促进公钥密码的发展而制订的一系列标准，PKCS 目前共发布过 15 个标准。 </p>
+<p>常用的有：<br>PKCS#7 Cryptographic Message Syntax Standard<br>PKCS#10 Certification Request Standard<br>PKCS#12 Personal Information Exchange Syntax Standard</p>
+<p>X.509是常见通用的证书格式。所有的证书都符合为Public Key Infrastructure (PKI) 制定的 ITU-T X509 国际标准。</p>
+<p>PKCS#7 常用的后缀是： .P7B .P7C .SPC<br>PKCS#12 常用的后缀有： .P12 .PFX<br>X.509 DER 编码(ASCII)的后缀是： .DER .CER .CRT<br>X.509 PAM 编码(Base64)的后缀是： .PEM .CER .CRT<br>.cer/.crt是用于存放证书，它是2进制形式存放的，不含私钥。<br>.pem跟crt/cer的区别是它以Ascii来表示。<br>pfx/p12用于存放个人证书/私钥，他通常包含保护密码，2进制方式<br>p10是证书请求<br>p7r是CA对证书请求的回复，只用于导入<br>p7b以树状展示证书链(certificate chain)，同时也支持单个证书，不含私钥。</p>
+<p>der,cer文件一般是二进制格式的，只放证书，不含私钥<br>crt文件可能是二进制的，也可能是文本格式的，应该以文本格式居多，功能同der/cer<br>pem文件一般是文本格式的，可以放证书或者私钥，或者两者都有<br>pem如果只含私钥的话，一般用.key扩展名，而且可以有密码保护<br>pfx,p12文件是二进制格式，同时含私钥和证书，通常有保护密码</p>
+<ol>
+<li><p>怎么判断是文本格式还是二进制？</p>
+<p> 用记事本打开，如果是规则的数字字母，如</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">—–BEGIN CERTIFICATE—–</span><br><span class="line">MIIE9jCCA96gAwIBAgIQVXD9d9wgivhJM//a3VIcDjANBgkqhkiG9w0BAQUFADBy</span><br><span class="line">—–END CERTIFICATE—–</span><br></pre></td></tr></table></figure>
+<p> 就是文本的。</p>
+<p> 上面的<code>—–BEGIN CERTIFICATE—–</code>，说明这是一个证书；<br> 如果是<code>—–BEGIN RSA PRIVATE KEY—–</code>，说明这是一个私钥，文本格式的私钥，也可能有密码保护；</p>
+</li>
+<li><p>文本格式怎么变成二进制？</p>
+<p> 从程序角度来说，去掉前后的—-行，剩下的去掉回车，用base64解码，就得到二进制了,不过一般都用命令行openssl完成这个工作；</p>
+</li>
+</ol>
+<h2 id="一-用openssl创建CA证书的RSA密钥-PEM格式-："><a href="#一-用openssl创建CA证书的RSA密钥-PEM格式-：" class="headerlink" title="一 用openssl创建CA证书的RSA密钥(PEM格式)："></a>一 用openssl创建CA证书的RSA密钥(PEM格式)：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -des3 -out ca.key 1024</span><br></pre></td></tr></table></figure>
+<h2 id="二-用openssl创建CA证书-PEM格式-假如有效期为一年-："><a href="#二-用openssl创建CA证书-PEM格式-假如有效期为一年-：" class="headerlink" title="二 用openssl创建CA证书(PEM格式,假如有效期为一年)："></a>二 用openssl创建CA证书(PEM格式,假如有效期为一年)：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -x509 -days 365 -key ca.key -out ca.crt -config openssl.cnf</span><br><span class="line">//openssl是可以生成DER格式的CA证书的，最好用IE将PEM格式的CA证书转换成DER格式的CA证书。</span><br></pre></td></tr></table></figure>
+<h2 id="三-x509到pfx"><a href="#三-x509到pfx" class="headerlink" title="三 x509到pfx"></a>三 x509到pfx</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkcs12 -export –in keys/client1.crt -inkey keys/client1.key -out keys/client1.pfx</span><br></pre></td></tr></table></figure>
+<h2 id="四-PEM格式的ca-key转换为Microsoft可以识别的pvk格式。"><a href="#四-PEM格式的ca-key转换为Microsoft可以识别的pvk格式。" class="headerlink" title="四 PEM格式的ca.key转换为Microsoft可以识别的pvk格式。"></a>四 PEM格式的ca.key转换为Microsoft可以识别的pvk格式。</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pvk -in ca.key -out ca.pvk -nocrypt -topvk</span><br></pre></td></tr></table></figure>
+<h2 id="五-PKCS-12-到-PEM-的转换"><a href="#五-PKCS-12-到-PEM-的转换" class="headerlink" title="五 PKCS#12 到 PEM 的转换"></a>五 PKCS#12 到 PEM 的转换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -nocerts -nodes -in cert.p12 -out private.pem</span><br><span class="line">//验证 openssl pkcs12 -clcerts -nokeys -in cert.p12 -out cert.pem</span><br></pre></td></tr></table></figure>
+<h2 id="六-从-PFX-格式文件中提取私钥格式文件-key"><a href="#六-从-PFX-格式文件中提取私钥格式文件-key" class="headerlink" title="六 从 PFX 格式文件中提取私钥格式文件 (.key)"></a>六 从 PFX 格式文件中提取私钥格式文件 (.key)</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -in mycert.pfx -nocerts -nodes -out mycert.key</span><br></pre></td></tr></table></figure>
+<h2 id="七-转换-pem-到到-spc"><a href="#七-转换-pem-到到-spc" class="headerlink" title="七 转换 pem 到到 spc"></a>七 转换 pem 到到 spc</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">openssl crl2pkcs7 -nocrl -certfile venus.pem -outform DER -out venus.spc</span><br><span class="line">//用 -outform -inform 指定 DER 还是 PAM 格式。例如：</span><br><span class="line">openssl x509 -in Cert.pem -inform PEM -out cert.der -outform DER</span><br></pre></td></tr></table></figure>
+<h2 id="八-PEM-到-PKCS-12-的转换"><a href="#八-PEM-到-PKCS-12-的转换" class="headerlink" title="八 PEM 到 PKCS#12 的转换"></a>八 PEM 到 PKCS#12 的转换</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -export -in Cert.pem -out Cert.p12 -inkey key.pem</span><br></pre></td></tr></table></figure>
+<h2 id="九-从用户证书-server-crt提取出公钥文件"><a href="#九-从用户证书-server-crt提取出公钥文件" class="headerlink" title="九 从用户证书 server.crt提取出公钥文件"></a>九 从用户证书 server.crt提取出公钥文件</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -outform PEM -in server/server.crt -pubkey -out server/server.pubkey</span><br><span class="line"></span><br><span class="line">&lt;!--</span><br><span class="line">-----BEGIN PUBLIC KEY-----</span><br><span class="line">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDYhJizzt4+zhLMTSjDk0rd6MlK</span><br><span class="line">xBYKIp972+Wc9KSpOs5LGQ+2802mlr6dSDWJJhJShArqOIKgxNE7ZBZYlGeDo4l6</span><br><span class="line">Dm4DyVFpu62fObgk6vmU8T7nvF8Uo7sQdpfqgUjofGFgUDjB3fYgKUTp+kOj6RMh</span><br><span class="line">R3uttrZmOraF/rEUkQIDAQAB</span><br><span class="line">-----END PUBLIC KEY-----</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p>可以显示公钥信息，手动将其中内容复制到一个文件中做公钥测试成功，但是此命令输出的文件内容不是公钥信息，内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN CERTIFICATE-----</span><br><span class="line">MIICpTCCAg6gAwIBAgIBATANBgkqhkiG9w0BAQUFADBFMQswCQYDVQQGEwJjbjEQ</span><br><span class="line">MA4GA1UECBMHYmVpamluZzEMMAoGA1UEChMDYW9lMRYwFAYDVQQDEw13d3cuenlu</span><br><span class="line">ZXQubXRuMB4XDTEzMDYwMjAxMjIxNloXDTE0MDYwMjAxMjIxNlowbzELMAkGA1UE</span><br><span class="line">BhMCY24xEDAOBgNVBAgMB2JlaWppbmcxDDAKBgNVBAoMA0FPRTEPMA0GA1UEAwwG</span><br><span class="line">d2l6YXJkMQwwCgYDVQQLDANjb3AxITAfBgkqhkiG9w0BCQEWEnd6aGgxOTg4QGdt</span><br><span class="line">YWlsLmNvbTCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA2ISYs87ePs4SzE0o</span><br><span class="line">w5NK3ejJSsQWCiKfe9vlnPSkqTrOSxkPtvNNppa+nUg1iSYSUoQK6jiCoMTRO2QW</span><br><span class="line">WJRng6OJeg5uA8lRabutnzm4JOr5lPE+57xfFKO7EHaX6oFI6HxhYFA4wd32IClE</span><br><span class="line">6fpDo+kTIUd7rba2Zjq2hf6xFJECAwEAAaN7MHkwCQYDVR0TBAIwADAsBglghkgB</span><br><span class="line">hvhCAQ0EHxYdT3BlblNTTCBHZW5lcmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYE</span><br><span class="line">FOhSP6PH+gt+PZjgIjhLGMMakFfMMB8GA1UdIwQYMBaAFMy18STW93imC2lMDsqI</span><br><span class="line">i6P0N+1hMA0GCSqGSIb3DQEBBQUAA4GBAH5nNEEP9HeBI7osag8SKRwu4VICQl5W</span><br><span class="line">AkHv08/kbVxd8B6ieI9si+DpHMQMl5Uk44Vz164aEAlkJFL3UEt8XJPpnYmrEM5X</span><br><span class="line">jdF4+VmQqPcxsSlxRmk60VMpR+cTZURPweKtbTD8WkszaShG263k+4GWuiERxVJu</span><br><span class="line">uL1TUTvMbg6B</span><br><span class="line">-----END CERTIFICATE-----</span><br></pre></td></tr></table></figure></p>
+<p>直接输入  <code>openssl x509 -in ca.crt -pubkey</code><br>会看到两个公钥输出，如果将它转换成der格式文件的公钥文件，则没有任何多余输出<br><code>openssl x509 -in ca.crt -inform PEM -out ca.der -outform DER</code></p>
+<h2 id="十-openssl从PFX导出私钥、公钥"><a href="#十-openssl从PFX导出私钥、公钥" class="headerlink" title="十 openssl从PFX导出私钥、公钥"></a>十 openssl从PFX导出私钥、公钥</h2><p>从pfx提取密钥信息，并转换为key格式（pfx使用pkcs12模式补足）</p>
+<ol>
+<li><p>提取密钥对（如果pfx证书已加密，会提示输入密码。）</p>
+<p> <code>openssl pkcs12 -in 1.pfx -nocerts -nodes -out 1.key</code></p>
+</li>
+<li><p>从密钥对提取私钥</p>
+<p> <code>openssl rsa -in  1.key -out 1_pri.key</code></p>
+</li>
+<li><p>从密钥对提取公钥</p>
+<p> <code>openssl rsa -in 1.key -pubout -out 1_pub.key</code></p>
+</li>
+<li><p>因为RSA算法使用的是pkcs8模式补足，需要对提取的私钥进一步处理</p>
+<p> <code>openssl pkcs8 -in 1_pri.key -out 1_pri.p8 -outform der -nocrypt -topk8</code></p>
+</li>
+</ol>
+<h1 id="密钥库文件格式-Keystore"><a href="#密钥库文件格式-Keystore" class="headerlink" title="密钥库文件格式[Keystore]"></a>密钥库文件格式[Keystore]</h1><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>扩展名</th>
+<th>描述</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JKS</td>
+<td>.jks/.ks</td>
+<td>[Java Keystore] 密钥库的Java实现版本，provider为SUN</td>
+<td>密钥库和私钥用不同的密码进行保护</td>
+</tr>
+<tr>
+<td>JCEKS</td>
+<td>.jce</td>
+<td>[JCE Keystore] 密钥库的JCE实现版本，provider为SUN JCE</td>
+<td>相对于JKS安全级别更高，保护Keystore私钥时采用TripleDES</td>
+</tr>
+<tr>
+<td>PKCS12</td>
+<td>.p12/.pfx</td>
+<td>[PKCS #12] 个人信息交换语法标准</td>
+<td>1、包含私钥、公钥及其证书<br> 2、密钥库和私钥用相同密码进行保护</td>
+</tr>
+<tr>
+<td>BKS</td>
+<td>.bks</td>
+<td>Bouncycastle Keystore] 密钥库的BC实现版本，provider为BC</td>
+<td>基于JCE实现</td>
+</tr>
+<tr>
+<td>UBER</td>
+<td>.ubr</td>
+<td>[Bouncycastle UBER Keystore] 密钥库的BC更安全实现版本，provider为BC</td>
+</tr>
+</tbody>
+</table>
+<h1 id="证书文件格式-Certificate"><a href="#证书文件格式-Certificate" class="headerlink" title="证书文件格式[Certificate]"></a>证书文件格式[Certificate]</h1><table>
+<thead>
+<tr>
+<th>格式</th>
+<th>扩展名</th>
+<th>描述</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DER</td>
+<td>.cer/.crt/.rsa</td>
+<td>[ASN .1 DER] 用于存放证书</td>
+<td>不含私钥、二进制</td>
+</tr>
+<tr>
+<td>PKCS7</td>
+<td>.p7b/.p7r</td>
+<td>[PKCS #7] 加密信息语法标准</td>
+<td>1、p7b以树状展示证书链，不含私钥<br> 2、p7r为CA对证书请求签名的回复，只能用于导入</td>
+</tr>
+<tr>
+<td>CMS</td>
+<td>.p7c/.p7m/.p7s</td>
+<td>[Cryptographic Message Syntax]</td>
+<td>1、p7c只保存证书<br> 2、p7m：signature with enveloped data<br> 3、p7s：时间戳签名文件</td>
+</tr>
+<tr>
+<td>PEM</td>
+<td>.pem</td>
+<td>[Printable Encoded Message]</td>
+<td>1、该编码格式在RFC1421中定义，其实PEM是[Privacy-Enhanced Mail]的简写，但他也同样广泛运用于密钥管理<br> 2、ASCII文件<br> 3、一般基于base 64编码</td>
+</tr>
+<tr>
+<td>PKCS10</td>
+<td>.p10/.csr</td>
+<td>[PKCS #10] 公钥加密标准[Certificate Signing Request]</td>
+<td>1、证书签名请求文件<br> 2、ASCII文件<br> 3、CA签名后以p7r文件回复<br></td>
+</tr>
+<tr>
+<td>SPC</td>
+<td>.pvk/.spc</td>
+<td>[Software Publishing Certificate]</td>
+<td>微软公司特有的双证书文件格式，经常用于代码签名，其中 pvk 用于保存私钥, spc 用于保存公钥 </td>
+</tr>
+</tbody>
+</table>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/myblog/tags/证书/">证书</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://lg8294.cn/myblog/2017/08/16/常见证书格式及相互转换/" data-title="常见证书格式及相互转换 | 李刚的博客" data-tsina="1745988582" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/myblog/2017/09/06/iOS开发中关于库的版本号的研究/" title="iOS开发中关于库的版本号的研究">
+  <strong>上一篇：</strong><br/>
+  <span>
+  iOS开发中关于库的版本号的研究</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/myblog/2017/08/09/myfirstpost/"  title="myfirstpost">
+ <strong>下一篇：</strong><br/> 
+ <span>myfirstpost
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#常见证书格式及相互转换"><span class="toc-number">1.</span> <span class="toc-text">常见证书格式及相互转换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一-用openssl创建CA证书的RSA密钥-PEM格式-："><span class="toc-number">1.1.</span> <span class="toc-text">一 用openssl创建CA证书的RSA密钥(PEM格式)：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二-用openssl创建CA证书-PEM格式-假如有效期为一年-："><span class="toc-number">1.2.</span> <span class="toc-text">二 用openssl创建CA证书(PEM格式,假如有效期为一年)：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三-x509到pfx"><span class="toc-number">1.3.</span> <span class="toc-text">三 x509到pfx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四-PEM格式的ca-key转换为Microsoft可以识别的pvk格式。"><span class="toc-number">1.4.</span> <span class="toc-text">四 PEM格式的ca.key转换为Microsoft可以识别的pvk格式。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五-PKCS-12-到-PEM-的转换"><span class="toc-number">1.5.</span> <span class="toc-text">五 PKCS#12 到 PEM 的转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#六-从-PFX-格式文件中提取私钥格式文件-key"><span class="toc-number">1.6.</span> <span class="toc-text">六 从 PFX 格式文件中提取私钥格式文件 (.key)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#七-转换-pem-到到-spc"><span class="toc-number">1.7.</span> <span class="toc-text">七 转换 pem 到到 spc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#八-PEM-到-PKCS-12-的转换"><span class="toc-number">1.8.</span> <span class="toc-text">八 PEM 到 PKCS#12 的转换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#九-从用户证书-server-crt提取出公钥文件"><span class="toc-number">1.9.</span> <span class="toc-text">九 从用户证书 server.crt提取出公钥文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#十-openssl从PFX导出私钥、公钥"><span class="toc-number">1.10.</span> <span class="toc-text">十 openssl从PFX导出私钥、公钥</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#密钥库文件格式-Keystore"><span class="toc-number">2.</span> <span class="toc-text">密钥库文件格式[Keystore]</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#证书文件格式-Certificate"><span class="toc-number">3.</span> <span class="toc-text">证书文件格式[Certificate]</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github 名片</p>
+<div class="github-card" data-github="lg8294" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/myblog/tags/iOS/" title="iOS">iOS<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/myblog/tags/证书/" title="证书">证书<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://juejin.im/" target="_blank" title="一个面向程序员交流分享的新一代社区">掘金</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://www.ruanyifeng.com/home.html" target="_blank" title="阮一峰">阮一峰</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/myblog/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=1745988582&verifier=42136668&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Li Gang in China. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/1745988582" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/lg8294" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:lg8294@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2019 
+		
+		<a href="/myblog/about" target="_blank" title="李刚">李刚</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/myblog/js/jquery-2.0.3.min.js"></script>
+<script src="/myblog/js/jquery.imagesloaded.min.js"></script>
+<script src="/myblog/js/gallery.js"></script>
+<script src="/myblog/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+        getSize();
+        if (myWidth >= 1024) {
+          c.click();
+        }
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/myblog/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/myblog/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/myblog/img/scrollup.png"/></a>
+	</div>
+	<script src="/myblog/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
